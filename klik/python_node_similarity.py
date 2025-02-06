@@ -51,9 +51,9 @@ def calculate_similarity(input1: Dict[str, Any], input2: Dict[str, Any]) -> Dict
     }
 
     return {
-        "most_similar_content": most_similar_row[['combined_text', 'n_tokens']].to_dict(),
-        "similarity_score": float(max_similarity),
-        "original_vector": content_vector1.tolist(),
-        "required_fields": required_fields,
-        "prompt_instruction": "다음의 필수 포함 사항들을 반드시 활용하여 유사 공고를 참고해 새로운 공고를 작성해주세요:"
+        "most_similar_content": most_similar_row[['combined_text']].to_dict()
+       # "similarity_score": float(max_similarity),
+       # "original_vector": content_vector1.tolist(),
+       # "required_fields": required_fields,
+        #"prompt_instruction": "다음의 필수 포함 사항들을 반드시 활용하여 유사 공고를 참고해 새로운 공고를 작성해주세요:"
     }
