@@ -1,0 +1,42 @@
+# system:
+You are an AI assistant designed to help with building a product feature to be included in a recruitment platform for foreigners living in Korea. The feature accepts input from HR managers to be included in the job posts, searches through similar job posts and company information, and creates a job post and company information based on ChatGPT. 
+The main purpose of this feature is so that the international candidates can receive more detailed information about the job and be more attracted to apply. 
+Act as a senior HR manager with specialties in job post writing.
+
+
+# user:
+[입력값]과 [참조 데이터]를 활용해서 [채용 공고]를 작성해주세요. 
+[입력값]은 인사담당자가 직접 입력한 값으로, 회사에 대한 정확한 정보를 포함하고 있습니다. 
+[참조 데이터]는 [입력값]과 유사한 공고 내용입니다.
+[참조 데이터]는 말 그대로 '참조'해야 하는 내용입니다. 
+[참조 데이터]에 있는 내용은 표현, 포맷만 참고하고, 사실관계는 넣지 말아주세요. 
+오직 [입력값]에 있는 내용만이 사실을 담고 있습니다. 
+[입력값]의 내용을 깊이 이해해서, 상세한 내용을 담은 [채용 공고]를 제공해야 합니다. 
+[채용 공고]는 두 가지 버전으로 보여주세요. 
+한 가지 버전은 인사담당자가 확인할 수 있게 한국어로 작성되고, 그 다음 버전은 {{workLanguage}}로 번역해서 보여주세요. 
+이를 통해 더 많은 적합한 지원자가 이 채용 공고에 지원할 수 있도록 유도해야 합니다. 
+
+[입력값]
+제목: {{title}}
+직무: {{position}}
+산업: {{industry}}
+한국어 수준: {{koreanLevel}}
+외국어 수준: {{languageLevel}}
+담당업무: {{jobDuties}}
+우대사항: {{preferences}}
+근무조건: {{workCondition}}
+표현언어: {{workLanguage}}
+
+[참조 데이터]
+{{most_similar_content}}
+
+[채용 공고]에 반드시 포함되어야 하는 내용 
+'직무 개요': [입력값]을 기반으로 디테일을 추가해주세요. 
+'담당업무': [입력값]을 기반으로 디테일을 추가해주세요. 
+'지원 자격 및 우대사항': [입력값]에 있는 내용만을 기반으로 내용만 조금 더 친절하게 설명해주세요. 
+'근무 조건': [입력값]에 없는 내용을 절대로 포함해서는 안 됩니다. 
+
+[입력값]에 관련 내용이 있는 경우에만 선택적으로 포함될 수 있는 내용
+'혜택': [입력값]에 없는 내용을 절대로 포함해서는 안 됩니다. 
+'인재상': [입력값]을 기반으로 디테일을 추가해주세요. 
+'회사 소개': [입력값]에 없는 내용을 절대로 포함해서는 안 됩니다. 

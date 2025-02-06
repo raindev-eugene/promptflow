@@ -1,3 +1,93 @@
-inputs: {}
-outputs: {}
-nodes: []
+inputs:
+  title:
+    type: string
+    default: 마케터 채용
+  position:
+    type: string
+    default: 마케팅
+  industry:
+    type: string
+    default: 병원
+  koreanLevel:
+    type: string
+    default: 상
+  languageLevel:
+    type: string
+    default: 영어
+  jobDuties:
+    type: string
+    default: 마케팅활동
+  preferences:
+    type: string
+    default: 경험많은사람
+  workCondition:
+    type: string
+    default: 재택
+  workLanguage:
+    type: string
+    default: 영어
+outputs:
+  type1:
+    type: string
+    reference: ${LLM_KLiK_JOBS.output}
+nodes:
+- name: python_node_text_merger
+  type: python
+  source:
+    type: code
+    path: python_node_text_merger.py
+  inputs:
+    title: ${inputs.title}
+    position: ${inputs.position}
+    industry: ${inputs.industry}
+    koreanLevel: ${inputs.koreanLevel}
+    languageLevel: ${inputs.languageLevel}
+    jobDuties: ${inputs.jobDuties}
+    preferences: ${inputs.preferences}
+    workCondition: ${inputs.workCondition}
+    workLanguage: ${inputs.workLanguage}
+- name: python_node_text_merger_v
+  type: python
+  source:
+    type: code
+    path: python_node_text_merger_v.py
+  inputs:
+    connection: open_ai_connection
+    merged_text: ${python_node_text_merger.output}
+- name: python_node_jobdata
+  type: python
+  source:
+    type: code
+    path: python_node_jobdata.py
+  inputs:
+    connection: open_ai_connection
+- name: python_node_similarity
+  type: python
+  source:
+    type: code
+    path: python_node_similarity.py
+  inputs:
+    input1: ${python_node_text_merger_v.output}
+    input2: ${python_node_jobdata.output}
+- name: LLM_KLiK_JOBS
+  type: custom_llm
+  source:
+    type: package_with_prompt
+    tool: promptflow.tools.llm.llm
+    path: LLM_KLiK_JOBS.jinja2
+  inputs:
+    connection: open_ai_connection
+    api: chat
+    deployment_name: gpt-4o-mini
+    max_tokens: 2000
+    temperature: 0.5
+    title: ${inputs.title}
+    position: ${inputs.position}
+    industry: ${inputs.industry}
+    koreanLevel: ${inputs.koreanLevel}
+    languageLevel: ${inputs.languageLevel}
+    jobDuties: ${inputs.jobDuties}
+    preferences: ${inputs.preferences}
+    workCondition: ${inputs.workCondition}
+    workLanguage: ${inputs.workLanguage}
+    most_similar_content: ${python_node_similarity.output}
