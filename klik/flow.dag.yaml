@@ -80,7 +80,7 @@ nodes:
     api: chat
     deployment_name: gpt-4o-mini
     max_tokens: 2000
-    temperature: 0.5
+    temperature: 0.2
     title: ${inputs.title}
     position: ${inputs.position}
     industry: ${inputs.industry}
